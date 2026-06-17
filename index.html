@@ -1,528 +1,109 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>SheerAI | Holographic IT Node | Custom Builds & Remote Tech Support</title>
-<meta name="description" content="SheerAI: Advanced Tech Support, Secure Custom PC Builds, and Private Air-Gapped AI Infrastructure located in Boise, Idaho.">
-<style>
-:root { --ng: #0F0; --np: #a200ff; --bd: #030303; }
-body, html { margin: 0; padding: 0; width: 100%; min-height: 100%; background-color: var(--bd); font-family: 'Courier New', Courier, monospace; color: var(--ng); overflow-x: hidden; -webkit-font-smoothing: antialiased; cursor: none; }
-body::after { content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); z-index: 99990; background-size: 100% 3px, 6px 100%; pointer-events: none; opacity: 0.6; }
-
-/* HARDWARE CURSOR */
-.cursor-dot { position: fixed; top: 0; left: 0; width: 4px; height: 4px; background: #fff; border-radius: 50%; pointer-events: none; z-index: 99999; box-shadow: 0 0 15px 4px var(--ng); margin-left: -2px; margin-top: -2px; will-change: transform; }
-.cursor-ring { position: fixed; top: 0; left: 0; width: 40px; height: 40px; border: 1px solid var(--np); border-radius: 50%; pointer-events: none; z-index: 99998; margin-left: -20px; margin-top: -20px; will-change: transform; box-shadow: inset 0 0 10px rgba(162,0,255,0.2); transition: width 0.1s, height 0.1s, border-color 0.1s; }
-body:active .cursor-ring { border-color: var(--ng); border-width: 2px; transform: scale(0.3) !important; transition: transform 0.1s, border-color 0.1s; }
-
-div[id^="tawk"], iframe[src*="tawk.to"], .tawk-min-container, .tawk-toolbar, #tawkchat-iframe { z-index: 2147483647 !important; pointer-events: auto !important; display: block !important; visibility: visible !important; opacity: 1 !important; }
-
-/* BOOT SCREEN */
-#boot-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 99000; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 40px; font-size: clamp(1.5rem, 4vw, 2.5rem); color: var(--ng); font-weight: bold; pointer-events: none; transition: opacity 0.8s; text-shadow: 0 0 20px var(--ng); }
-.boot-line { margin-bottom: 15px; display: block; white-space: pre-wrap; }
-.corrupt-text { color: #f00; text-shadow: 0 0 10px #f00; }
-
-/* BACKGROUND FX (Nodes, Matrix, Rings) */
-#canvas-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; perspective: 1200px; overflow: hidden; pointer-events: none; transition: filter 1s ease-in-out; }
-#matrix-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.15; z-index: 0; }
-.perspective-grid { position: absolute; bottom: -50%; left: -50%; width: 200%; height: 100%; background-image: linear-gradient(to right, rgba(162,0,255,0.3) 1px, transparent 1px), linear-gradient(to top, rgba(162,0,255,0.3) 1px, transparent 1px); background-size: 50px 50px; transform: rotateX(75deg); transform-origin: top center; z-index: 1; animation: gridMove 20s linear infinite; }
-@keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 0 50px; } }
-
-.rotating-core { position: absolute; top: 40%; left: 50%; width: 100vw; height: 100vw; margin-top: -50vw; margin-left: -50vw; transform-style: preserve-3d; animation: spinCore 90s linear infinite; z-index: 2; opacity: 0.1; will-change: transform; }
-.ring { position: absolute; top: 50%; left: 50%; font-size: 4rem; font-weight: 900; color: var(--np); white-space: nowrap; transform-style: preserve-3d; text-shadow: 0 0 30px var(--np); }
-.ring-1 { transform: translate(-50%, -50%) rotateX(0deg) rotateY(0deg); animation: counterSpin 40s linear infinite; color: var(--ng); text-shadow: 0 0 20px var(--ng); font-size: 6rem; }
-@keyframes spinCore { 0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); } 100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); } }
-@keyframes counterSpin { 0% { transform: translate(-50%, -50%) rotateZ(0deg); } 100% { transform: translate(-50%, -50%) rotateZ(-360deg); } }
-
-#particles-js { position: absolute; top: 0; left: 0; width: 100%; height: 100%; filter: drop-shadow(0 0 8px var(--np)); z-index: 3; pointer-events: auto; }
-
-.audio-visualizer { position: fixed; bottom: 0; left: 0; width: 100%; height: 40px; display: flex; align-items: flex-end; justify-content: center; gap: 4px; z-index: 90; opacity: 0.5; pointer-events: none; }
-.bar { width: 12px; background: var(--np); transition: height 0.1s ease, background 1s ease-in-out; }
-
-/* MAIN WRAPPER & NAV */
-.content-wrapper { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; padding: 20px; box-sizing: border-box; width: 100%; opacity: 0; transition: opacity 1s; padding-bottom: 100px; }
-
-nav { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 25px 5%; box-sizing: border-box; border-bottom: 2px solid var(--ng); background: rgba(0,0,0,0.95); position: relative; z-index: 50; box-shadow: 0 5px 30px rgba(0,255,0,0.1); }
-.logo { display: flex; align-items: center; gap: 20px; text-decoration: none; cursor: none; }
-.logo svg { width: 55px; height: 55px; filter: drop-shadow(0 0 10px rgba(162,0,255,0.5)); transition: 0.5s; }
-.logo-text { font-size: 3rem; font-weight: 900; letter-spacing: 5px; color: #fff; }
-.logo-text span { color: var(--np); text-shadow: 0 0 20px var(--np); }
-.nav-buttons { display: flex; gap: 30px; }
-.nav-btn { background: transparent; border: none; color: var(--ng); font-size: 1.5rem; font-weight: 900; letter-spacing: 3px; cursor: none; transition: 0.3s; font-family: inherit; }
-.nav-btn:hover { color: #fff; text-shadow: 0 0 15px var(--ng); }
-
-header { text-align: center; margin: 80px 0 40px 0; width: 100%; }
-.glitch { font-size: 9rem; font-weight: 900; text-transform: none; position: relative; color: #fff; text-shadow: 0 0 40px var(--ng); letter-spacing: 15px; margin: 0; display: inline-block; }
-.tagline { font-size: 1.8rem; margin-top: 25px; color: #000; background: var(--np); padding: 15px 40px; font-weight: 900; display: inline-block; letter-spacing: 8px; box-shadow: 0 0 40px var(--np); text-transform: uppercase; clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px); transition: 0.5s; }
-
-.holographic-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 60px; width: 100%; max-width: 1700px; margin-top: 40px; perspective: 1500px; pointer-events: none; }
-.bio-container { width: 100%; max-width: 1700px; margin-top: 40px; perspective: 1500px; pointer-events: none; }
-.holo-card-wrapper { perspective: 1500px; transform-style: preserve-3d; cursor: none; will-change: transform; pointer-events: auto; }
-.card-inner { background: rgba(5, 5, 5, 0.95); border: 2px solid var(--np); clip-path: polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px); position: relative; box-shadow: 0 0 30px rgba(162,0,255,0.15); transform-style: preserve-3d; will-change: transform; display: flex; flex-direction: column; min-height: 500px; overflow: hidden; }
-.card-inner::after { content: ''; position: absolute; top: -100%; left: 0; width: 100%; height: 10px; background: var(--ng); box-shadow: 0 0 30px 10px var(--ng); opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 50; mix-blend-mode: overlay; }
-.holo-card-wrapper:hover .card-inner::after { opacity: 0.8; animation: ls 2s infinite ease-in-out; }
-@keyframes ls { 0% { top: -10%; } 50% { top: 110%; } 100% { top: -10%; } }
-.holo-card-wrapper:hover .card-inner { border-color: var(--ng); box-shadow: 0 0 50px rgba(0, 255, 0, 0.4); background: rgba(8, 15, 8, 0.98); }
-
-.terminal-header { background: rgba(10, 10, 10, 1); padding: 25px; display: flex; align-items: center; border-bottom: 2px dashed var(--np); transform: translateZ(20px); }
-.terminal-dots { display: flex; gap: 10px; margin-right: 20px; }
-.dot { width: 14px; height: 14px; background: var(--np); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); transition: background 0.3s; } 
-.terminal-title { color: #fff; font-size: 1.4rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
-.card-body { padding: 50px; transform-style: preserve-3d; }
-.live-hash { position: absolute; top: 25px; right: 25px; color: var(--np); font-size: 1.3rem; font-weight: 900; transform: translateZ(30px); transition: color 0.3s; }
-
-.card-inner h3 { font-size: 3rem; color: #fff; margin-top: 0; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 4px; transform: translateZ(60px); text-shadow: 0 10px 20px rgba(0,0,0,0.9); transition: color 0.3s; }
-.decrypt-text { font-size: 1.5rem; color: #eee; line-height: 2; font-weight: 900; transform: translateZ(40px); }
-.highlight-bio { color: #fff; text-shadow: 0 0 10px var(--ng); }
-.status-bar { margin-top: 40px; font-size: 1.4rem; color: var(--np); letter-spacing: 4px; font-weight: 900; transform: translateZ(50px); transition: color 0.3s; }
-
-/* FIX: CORE CAPABILITIES BOUNDARIES */
-.capabilities-section { display: flex; flex-direction: column; width: 100%; max-width: 1700px; margin: 80px auto; gap: 60px; position: relative; z-index: 20; pointer-events: none; }
-@media (min-width: 1200px) {
-    .capabilities-section { flex-direction: row; align-items: flex-start; }
-    .cap-left { flex: 0 0 400px; position: sticky; top: 120px; } /* 400px fixed width prevents overlap */
-    .cap-right { flex: 1; display: flex; flex-direction: column; gap: 50px; min-width: 0; } /* min-width 0 fixes flex blowouts */
-}
-.cap-left h2 { font-size: clamp(3rem, 5vw, 5.5rem); font-weight: 900; color: #fff; text-shadow: 0 0 30px var(--ng); line-height: 1.1; margin: 0; letter-spacing: 4px; word-wrap: break-word; }
-
-.form-container { background: rgba(5, 5, 5, 0.95); border: 2px solid var(--ng); padding: 70px; width: 100%; max-width: 1200px; margin-top: 100px; box-shadow: 0 0 50px rgba(0,255,0,0.15); position: relative; clip-path: polygon(50px 0, 100% 0, 100% calc(100% - 50px), calc(100% - 50px) 100%, 0 100%, 0 50px); pointer-events: auto; z-index: 20; }
-form { display: flex; flex-direction: column; gap: 40px; margin-top: 20px; }
-input, textarea { width: 100%; padding: 30px; background: rgba(15, 15, 15, 1); border: 2px solid #040; color: var(--ng); font-family: inherit; box-sizing: border-box; font-size: 1.6rem; font-weight: 900; letter-spacing: 2px; cursor: none; transition: 0.3s; }
-button.action-btn { background: transparent; color: var(--ng); font-weight: 900; padding: 30px; border: 3px solid var(--ng); cursor: none; transition: 0.3s; font-family: inherit; font-size: 2.2rem; letter-spacing: 8px; text-transform: uppercase; clip-path: polygon(25px 0, 100% 0, 100% calc(100% - 25px), calc(100% - 25px) 100%, 0 100%, 0 25px); }
-
-/* FIX: MODAL OVERLAY CURSOR ISSUE */
-.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); z-index: 1000; display: none; justify-content: center; align-items: center; cursor: auto !important; }
-.modal-overlay.active { display: flex; }
-.terminal-window { background: rgba(8, 8, 8, 1); border: 2px solid var(--np); width: 95%; max-width: 1200px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 0 80px rgba(162,0,255,0.5); clip-path: polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px); cursor: auto !important; }
-.terminal-window * { cursor: auto !important; } /* Forces normal mouse inside window */
-
-.window-header { background: rgba(30, 0, 50, 0.9); padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--np); }
-.window-title { color: #fff; font-weight: 900; letter-spacing: 3px; font-size: 1.6rem;}
-.close-btn { color: var(--ng); background: transparent; border: none; font-size: 2.5rem; font-weight: 900; cursor: pointer !important; transition: 0.3s; padding: 0;}
-.close-btn:hover { color: #f00; text-shadow: 0 0 20px #f00; transform: scale(1.2) rotate(90deg); }
-.window-content { padding: 60px; overflow-y: auto; color: #eee; font-size: 1.6rem; line-height: 2; }
-.news-item { border-left: 4px solid var(--ng); padding-left: 25px; margin-bottom: 40px; background: rgba(0, 255, 0, 0.05); padding: 30px; }
-.news-title { color: var(--ng); font-size: 1.8rem; margin-top: 0; }
-.news-date { color: var(--np); font-size: 1.2rem; font-weight: bold; margin-top: 10px; display: block; }
-.merch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 30px; }
-.merch-item { background: rgba(162, 0, 255, 0.1); border: 1px solid var(--np); padding: 30px; text-align: center; display: flex; flex-direction: column; justify-content: space-between;}
-.merch-item h3 { color: var(--ng); font-size: 1.6rem; margin-top: 0; }
-.merch-item button { background: transparent; border: 2px solid var(--ng); color: var(--ng); font-weight: bold; padding: 15px 20px; cursor: pointer !important; transition: 0.3s; margin-top: 20px; width: 100%; text-transform: uppercase; font-size: 1.4rem; }
-</style>
-</head>
-<body>
-<div class="cursor-dot" id="cursorDot"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-<div id="boot-screen"></div>
-<div id="canvas-container">
-    <div class="perspective-grid"></div>
-    <div class="rotating-core">
-        <div class="ring ring-1">SHEER_AI SHEER_AI SHEER_AI</div>
-        <div class="ring ring-2">1010101011101010001111010101</div>
-    </div>
-    <canvas id="matrix-canvas"></canvas>
-    <div id="particles-js"></div>
-</div>
-<div class="audio-visualizer" id="visualizer"></div>
-<div class="content-wrapper" id="main-content">
-    <nav>
-        <a href="javascript:void(0);" class="logo">
-            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="100" cy="100" r="90" fill="none" stroke="#a200ff" stroke-width="2" stroke-dasharray="2, 6"/>
-                <circle cx="100" cy="100" r="80" fill="none" stroke="#a200ff" stroke-width="3" stroke-dasharray="20, 10, 5, 10"/>
-                <polygon points="100,30 160,65 160,135 100,170 40,135 40,65" fill="none" stroke="#0F0" stroke-width="2"/>
-                <polygon points="100,10 178,55 178,145 100,190 22,145 22,55" fill="none" stroke="#a200ff" stroke-width="2"/>
-                <rect x="55" y="55" width="90" height="90" fill="rgba(162, 0, 255, 0.1)" stroke="#a200ff" stroke-width="3" transform="rotate(45 100 100)"/>
-                <polygon points="100,45 125,100 100,155 75,100" fill="rgba(0, 255, 0, 0.2)" stroke="#0F0" stroke-width="2"/>
-                <polygon points="100,60 115,100 100,140 85,100" fill="#0F0"/>
-                <circle cx="100" cy="100" r="8" fill="#fff"/>
-            </svg>
-            <div class="logo-text">Sheer<span>AI</span></div>
-        </a>
-        <div class="nav-buttons">
-            <button type="button" class="nav-btn" onclick="openModal('aboutModal')">[ ABOUT ]</button>
-            <button type="button" class="nav-btn" onclick="openModal('newsModal')">[ INTEL FEED ]</button>
-            <button type="button" class="nav-btn" onclick="openModal('gearModal')">[ GEAR ]</button>
-            <button type="button" class="nav-btn" onclick="window.location.href='https://portal.sheerai.net'">[ PORTAL ]</button>
+                    <li>Network Administration</li>
+                </ul>
+            </div>
         </div>
-    </nav>
-    
-    <header>
-        <h1 class="glitch" data-text="SheerAI">SheerAI</h1><br>
-        <div class="tagline" id="tagline-fx">QUANTUM INFRASTRUCTURE</div>
-    </header>
 
-    <div class="bio-container holo-card-wrapper" onmouseenter="forceDecrypt(this)">
-        <div class="card-inner bio-card-inner">
-            <div class="terminal-header">
-                <div class="terminal-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                <span class="terminal-title">root@sheerai: ~/sysadmin_override</span>
-                <div class="live-hash">0xWAIT</div>
-            </div>
-            <div class="card-body">
-                <h3>OPERATOR: RYAN BREUKER</h3>
-                <div class="decrypt-text" data-original="<span class='highlight-bio'>BASE OF OPERATIONS:</span> Boise, ID<br><br>> <span class='highlight-bio'>EXPERIENCE:</span> 12+ Years Enterprise Network Troubleshooting & Tech Support.<br>> <span class='highlight-bio'>SPECIALTY:</span> Custom Extreme-Compute PC Builds & Hardware Optimization.<br>> <span class='highlight-bio'>OPSEC:</span> Deep privacy-hardened environment setups (Qubes OS, GrapheneOS).<br>> <span class='highlight-bio'>COMPUTE:</span> Local AI stack engineering (Ollama / Open WebUI) & Hardware optimization.">
-                    [LOCKED_PROFILE_DATA]
+        <div class="extended-section" id="private-ai">
+            <h2>Air-Gapped Private AI</h2>
+            <p class="section-subtitle">Deploy powerful Large Language Models directly on your own hardware. Zero data leaks. Zero cloud dependencies. Built for Treasure Valley law firms, clinics, and financial offices.</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h2>Local LLM Deployment</h2>
+                    <p>Custom Ollama and Open WebUI stacks tailored to your specific operational needs.</p>
                 </div>
-                <div class="status-bar">[ IDENTITY_VERIFICATION... ]</div>
+                <div class="service-card">
+                    <h2>Absolute Data Privacy</h2>
+                    <p>Your proprietary data never leaves your building. Complete mitigation of third-party API risks.</p>
+                </div>
+                <div class="service-card">
+                    <h2>Containerized & Secure</h2>
+                    <p>Docker-based architecture ensuring isolated, highly maintainable, and secure AI nodes.</p>
+                </div>
             </div>
+        </div>
+
+        <div class="extended-section" id="custom-builds">
+            <h2>Specialized Architecture</h2>
+            <p class="section-subtitle">Purpose-built hardware for demanding workloads. We engineer workstations optimized for extreme compute, deep rendering, and uncompromising security.</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h2>The AI Node</h2>
+                    <p>Maximized VRAM and optimized tensor performance configured for running local language models and Docker natively.</p>
+                </div>
+                <div class="service-card">
+                    <h2>Production Workstation</h2>
+                    <p>Engineered for massive multi-threaded workloads, 3D geometric simulations, and complex audio processing.</p>
+                </div>
+                <div class="service-card">
+                    <h2>Zero-Trust Terminal</h2>
+                    <p>Hardware selected for extreme opsec. Built to support security-focused hypervisors and hardware fingerprinting mitigation.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="extended-section" id="onboarding">
+            <h2>Initiate a Project</h2>
+            <p class="section-subtitle">Secure, confidential consultations for enterprise infrastructure and specialized architecture.</p>
+            <form class="intake-form" action="mailto:admin@sheerai.net" method="POST" enctype="text/plain">
+                <input type="text" name="Name" placeholder="Full Name / Point of Contact" required>
+                <input type="text" name="Company" placeholder="Organization / Company">
+                <input type="email" name="Email" placeholder="Secure Email Address" required>
+                <select name="Service_Tier" required>
+                    <option value="" disabled selected>Select Primary Objective...</option>
+                    <option value="Private AI">Air-Gapped Private AI Deployment</option>
+                    <option value="Custom Build">High-Performance Custom Architecture</option>
+                    <option value="Zero Trust">Zero-Trust / Opsec Consulting</option>
+                    <option value="Enterprise IT">Enterprise IT / Network Infrastructure</option>
+                </select>
+                <textarea name="Project_Scope" rows="5" placeholder="Briefly describe your current infrastructure and immediate requirements..." required></textarea>
+                <button type="submit">Request Secure Consultation</button>
+            </form>
+        </div>
+
+        <div class="cta-area">
+            <a href="mailto:admin@sheerai.net" class="btn">Direct Email</a>
+            <a href="https://portal.sheerai.net" class="btn btn-alt">Client Portal Login</a>
         </div>
     </div>
 
-    <div class="holographic-grid">
-        <div class="holo-card-wrapper" onmouseenter="forceDecrypt(this)">
-            <div class="card-inner">
-                <div class="terminal-header">
-                    <div class="terminal-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                    <span class="terminal-title">root@sheerai: ~/remote-support</span>
-                    <div class="live-hash">0xWAIT</div>
-                </div>
-                <div class="card-body">
-                    <h3>Boise Tech Support</h3>
-                    <div class="decrypt-text" data-original="OVERVIEW: Elite troubleshooting for business and personal systems.<br><br>> Instant Remote IT Support.<br>> Step-by-step guidance for advanced network routing.<br>> Local on-site support for Treasure Valley.<br>> Windows/Linux system hardening.">
-                        [LOCKED_DATA]
-                    </div>
-                    <div class="status-bar">[ ACCESSING... ]</div>
-                </div>
-            </div>
-        </div>
-        <div class="holo-card-wrapper" onmouseenter="forceDecrypt(this)">
-            <div class="card-inner">
-                <div class="terminal-header">
-                    <div class="terminal-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                    <span class="terminal-title">root@sheerai: ~/custom-builds</span>
-                    <div class="live-hash">0xWAIT</div>
-                </div>
-                <div class="card-body">
-                    <h3>Custom PC Builds</h3>
-                    <div class="decrypt-text" data-original="OVERVIEW: Purpose-built hardware for extreme performance.<br><br>> Liquid-cooled workstations & gaming rigs.<br>> High-VRAM setups for AI Tensor compute.<br>> Component sourcing and meticulous assembly.<br>> Absolute hardware stress testing.">
-                        [LOCKED_DATA]
-                    </div>
-                    <div class="status-bar">[ ACCESSING... ]</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="capabilities-section">
-        <div class="cap-left">
-            <h2 class="glitch-title" style="font-size: clamp(3rem, 5vw, 5.5rem); margin: 0; word-wrap: break-word;">CORE CAPABILITIES</h2>
-        </div>
-        <div class="cap-right">
-            <div class="holo-card-wrapper" onmouseenter="forceDecrypt(this)">
-                <div class="card-inner" style="min-height: auto; padding-bottom: 20px;">
-                    <div class="terminal-header">
-                        <div class="terminal-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                        <span class="terminal-title">~/private-ai-deploy</span>
-                    </div>
-                    <div class="card-body" style="padding: 30px;">
-                        <h3 style="font-size: 2.2rem; margin-bottom: 15px;">PRIVATE AI INFRASTRUCTURE</h3>
-                        <div class="decrypt-text" data-original="<span class='highlight-bio'>THE MISSION:</span> Small businesses desperately need to use AI, but cannot legally paste client data into public models like ChatGPT. They require 'air-gapped' private AI.<br><br><span class='highlight-bio'>THE SERVICE:</span> Remote configuration and deployment of local LLMs via Open WebUI and secure Cloudflare Tunnels, establishing an interface secured entirely behind zero-trust architecture.">[LOCKED_DATA]</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="holo-card-wrapper" onmouseenter="forceDecrypt(this)">
-                <div class="card-inner" style="min-height: auto; padding-bottom: 20px;">
-                    <div class="terminal-header">
-                        <div class="terminal-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                        <span class="terminal-title">~/devsecops-hardening</span>
-                    </div>
-                    <div class="card-body" style="padding: 30px;">
-                        <h3 style="font-size: 2.2rem; margin-bottom: 15px;">DEVSECOPS CONSULTANT</h3>
-                        <div class="decrypt-text" data-original="<span class='highlight-bio'>THE MISSION:</span> Utilizing GrapheneOS and Qubes OS establishes a rare level of operational security.<br><br><span class='highlight-bio'>THE SERVICE:</span> Audit, secure, and harden infrastructure for privacy-conscious startups and high-net-worth individuals.">[LOCKED_DATA]</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="holo-card-wrapper" onmouseenter="forceDecrypt(this)">
-                <div class="card-inner" style="min-height: auto; padding-bottom: 20px;">
-                    <div class="terminal-header">
-                        <div class="terminal-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                        <span class="terminal-title">~/blockchain-automation</span>
-                    </div>
-                    <div class="card-body" style="padding: 30px;">
-                        <h3 style="font-size: 2.2rem; margin-bottom: 15px;">BLOCKCHAIN DATA BOTS</h3>
-                        <div class="decrypt-text" data-original="<span class='highlight-bio'>THE MISSION:</span> Monetize automation logic directly by monitoring blocks for massive transfers and tracking chain logic.<br><br><span class='highlight-bio'>THE SERVICE:</span> Building custom Python automation bots for Web3 projects or 'whale-watching' alerts.">[LOCKED_DATA]</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="holo-card-wrapper" onmouseenter="forceDecrypt(this)">
-                <div class="card-inner" style="min-height: auto; padding-bottom: 20px; border-color: var(--np); box-shadow: 0 0 30px rgba(162,0,255,0.15);">
-                    <div class="terminal-header" style="border-bottom-color: var(--np);">
-                        <div class="terminal-dots"><span class="dot" style="background: var(--np);"></span><span class="dot" style="background: var(--np);"></span><span class="dot" style="background: var(--np);"></span></div>
-                        <span class="terminal-title" style="color: var(--np);">~/strategic-directive</span>
-                    </div>
-                    <div class="card-body" style="padding: 30px;">
-                        <h3 style="font-size: 2.2rem; color: var(--np); text-shadow: 0 10px 20px rgba(0,0,0,0.9); margin-bottom: 15px;">THE SHIFT IN STRATEGY</h3>
-                        <div class="decrypt-text" data-original="To execute this operational pivot from Boise, Idaho, marketing must shift away from local residential support toward business owners and enterprises requiring absolute data security and automated intelligence. Leveraging the sheerai.net domain and existing local infrastructure, the <span style='color:#fff; text-shadow: 0 0 10px #fff;'>Private AI Deployment</span> route operates as the fastest trajectory to secure high-ticket, remote-only contracts.">[LOCKED_DATA]</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-container">
-        <form>
-            <input type="text" placeholder="[ POINT_OF_CONTACT ]">
-            <input type="email" placeholder="[ SECURE_EMAIL ]">
-            <textarea rows="5" placeholder="[ REQUIREMENTS / BUILD_SPECS ]"></textarea>
-            <button type="button" class="action-btn">INITIATE TRANSMISSION</button>
-        </form>
-    </div>
-</div>
-
-<div class="modal-overlay" id="aboutModal">
-    <div class="terminal-window">
-        <div class="window-header">
-            <span class="window-title">root@sheerai: ~/system/about_us</span>
-            <button type="button" class="close-btn" onclick="closeModal('aboutModal')">X</button>
-        </div>
-        <div class="window-content">
-            <h2 style="color:var(--ng);text-transform:uppercase;margin-top:0;font-size:2.2rem;">The SheerAI Directive</h2>
-            <p>Based in Boise, Idaho, SheerAI was forged to provide elite Tech Support, Remote IT solutions, and Custom PC Builds. With over 12 years of deep architectural experience spanning severe hardware environments and complex networks, we don't just fix systems—we rebuild them for the future.</p>
-            <ul style="list-style-type:square;color:var(--np);margin-top:30px;">
-                <li style="margin-bottom:15px;"><span style="color:#fff;">12+ Years Enterprise Network Support</span></li>
-                <li style="margin-bottom:15px;"><span style="color:#fff;">Specialized Custom Hardware Builds</span></li>
-                <li style="margin-bottom:15px;"><span style="color:#fff;">Immediate Remote Tech Support</span></li>
-            </ul>
-        </div>
-    </div>
-</div>
-<div class="modal-overlay" id="newsModal">
-    <div class="terminal-window">
-        <div class="window-header">
-            <span class="window-title">root@sheerai: ~/network/hackernews_feed</span>
-            <button type="button" class="close-btn" onclick="closeModal('newsModal')">X</button>
-        </div>
-        <div class="window-content" id="news-container">
-            <p style="color:var(--ng);font-weight:bold;font-size:1.8rem;">[ ESTABLISHING CONNECTION... ]</p>
-        </div>
-    </div>
-</div>
-<div class="modal-overlay" id="gearModal">
-    <div class="terminal-window">
-        <div class="window-header">
-            <span class="window-title">root@sheerai: ~/supply_chain/secure_inventory</span>
-            <button type="button" class="close-btn" onclick="closeModal('gearModal')">X</button>
-        </div>
-        <div class="window-content">
-            <h2 style="color:var(--ng);text-transform:uppercase;margin-top:0;font-size:2.2rem;">Hardware & Operator Gear</h2>
-            <div class="merch-grid">
-                <div class="merch-item">
-                    <h3>Sysadmin Hoodie</h3>
-                    <p>Heavyweight cotton. Matte black. SheerAI Node emblem.</p>
-                    <button type="button" onclick="window.open('https://shop.sheerai.net','_blank')">ACQUIRE [$55.00]</button>
-                </div>
-                <div class="merch-item">
-                    <h3>RF Faraday Pouch</h3>
-                    <p>Military-grade signal blocking. Kills all tracking instantly.</p>
-                    <button type="button" onclick="window.open('https://shop.sheerai.net','_blank')">ACQUIRE [$24.99]</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-<script>
-const cursorDot = document.getElementById('cursorDot');
-const cursorRing = document.getElementById('cursorRing');
-let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-let ringX = mouseX, ringY = mouseY;
-window.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; }, {passive: true});
-
-// FIX: CLOSE MODAL ON OUTSIDE CLICK OR ESC KEY
-window.addEventListener('click', (e) => {
-    if (e.target.classList.contains('modal-overlay')) { e.target.classList.remove('active'); }
-});
-document.addEventListener('keydown', (e) => {
-    if(e.key === "Escape") { document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active')); }
-});
-
-function openModal(id) { 
-    document.getElementById(id).classList.add('active'); 
-    if(id === 'newsModal') fetchNews(); 
-}
-function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-
-async function fetchNews() {
-    const container = document.getElementById('news-container');
-    try {
-        const response = await fetch('https://hacker-news.firebaseio.com/v0/topstories.json');
-        const ids = await response.json();
-        let html = '';
-        for (let i = 0; i < 5; i++) {
-            const res = await fetch(`https://hacker-news.firebaseio.com/v0/item/${ids[i]}.json`);
-            const story = await res.json();
-            const date = new Date(story.time * 1000).toLocaleString();
-            html += `<div class="news-item"><h3 class="news-title">${story.title}</h3><span class="news-date">LOGGED: ${date} | SCORE: ${story.score}</span><a href="${story.url}" target="_blank" style="color:#fff;text-decoration:underline;margin-top:10px;display:inline-block;cursor:pointer;">READ_INTEL ></a></div>`;
-        }
-        container.innerHTML = html;
-    } catch (e) {
-        container.innerHTML = '<p style="color:red">[ ERROR: SECURE_LINK_TIMEOUT ]</p>';
-    }
-}
-const cards = document.querySelectorAll('.holo-card-wrapper');
-const cardStates = Array.from(cards).map(() => ({ targetX: 0, targetY: 0, currentX: 0, currentY: 0, isHovered: false }));
-let ticking = false;
-cards.forEach((wrapper, index) => {
-wrapper.addEventListener('mousemove', e => {
-if (!ticking) {
-window.requestAnimationFrame(() => {
-let rect = wrapper.getBoundingClientRect();
-let x = e.clientX - rect.left, y = e.clientY - rect.top, centerX = rect.width / 2, centerY = rect.height / 2;
-cardStates[index].targetX = ((y - centerY) / centerY) * -12; 
-cardStates[index].targetY = ((x - centerX) / centerX) * 12;
-ticking = false;
-});
-ticking = true;
-}
-});
-wrapper.addEventListener('mouseenter', () => cardStates[index].isHovered = true);
-wrapper.addEventListener('mouseleave', () => {
-cardStates[index].isHovered = false; cardStates[index].targetX = 0; cardStates[index].targetY = 0;
-});
-});
-function renderLoop() {
-ringX += (mouseX - ringX) * 0.25; ringY += (mouseY - ringY) * 0.25;
-cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
-cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
-cards.forEach((wrapper, index) => {
-let state = cardStates[index];
-state.currentX += (state.targetX - state.currentX) * 0.1; state.currentY += (state.targetY - state.currentY) * 0.1;
-if (Math.abs(state.currentX - state.targetX) > 0.1 || Math.abs(state.currentY - state.targetY) > 0.1) {
-const inner = wrapper.querySelector('.card-inner');
-if(inner) inner.style.transform = `rotateX(${state.currentX}deg) rotateY(${state.currentY}deg) scale3d(${state.isHovered ? 1.03 : 1}, ${state.isHovered ? 1.03 : 1}, 1)`;
-}
-});
-requestAnimationFrame(renderLoop);
-}
-renderLoop();
-const mCanvas = document.getElementById('matrix-canvas'); const ctx = mCanvas.getContext('2d', { alpha: false });
-let width, height, columns, drops; const chars = "01";
-function initMatrix() { width = mCanvas.width = window.innerWidth; height = mCanvas.height = window.innerHeight; columns = Math.floor(width / 25); drops = new Array(columns).fill(1); }
-function drawMatrix() {
-ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; ctx.fillRect(0, 0, width, height);
-ctx.fillStyle = isGreen ? "#0F0" : "#a200ff"; ctx.font = "bold 20px monospace";
-for (let i = 0; i < drops.length; i++) {
-ctx.fillText(chars[Math.floor(Math.random() * chars.length)], i * 25, drops[i] * 25);
-if (drops[i] * 25 > height && Math.random() > 0.975) drops[i] = 0; drops[i]++;
-}
-}
-window.addEventListener('resize', initMatrix); initMatrix(); setInterval(drawMatrix, 60);
-particlesJS("particles-js", {
-"particles": { "number": { "value": 45 }, "color": { "value": "#a200ff" }, "shape": { "type": "polygon", "polygon": {"nb_sides": 6} }, "size": { "value": 6 }, "line_linked": { "enable": true, "distance": 180, "color": "#a200ff", "opacity": 0.5, "width": 2 }, "move": { "enable": true, "speed": 1.5 } },
-"interactivity": { "detect_on": "window", "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": false } }, "modes": { "repulse": { "distance": 120, "duration": 0.4 } } }
-});
-let isGreen = false;
-window.addEventListener("scroll", () => {
-let p = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-isGreen = Math.floor(p / 5) % 2 === 0;
-document.getElementById("particles-js").style.filter = isGreen ? "hue-rotate(270deg)" : "none";
-}, {passive: true});
-const bootLines = ["INITIATING BRUTE FORCE...", "BYPASSING FIREWALL...", "INJECTING PAYLOAD...", "ROOT ACCESS GRANTED.", "WELCOME, SYSTEM ADMIN."];
-const bootScreen = document.getElementById("boot-screen");
-let currentLine = 0;
-function scrambleText(text, element, callback) {
-let it = 0;
-const iv = setInterval(() => {
-element.innerHTML = "> " + text.split('').map((c, i) => {
-if (i < it) return `<span style="color:#0F0">${c}</span>`;
-return `<span class="corrupt-text">${"01X#*&%"[Math.floor(Math.random()*7)]}</span>`;
-}).join('');
-if (it >= text.length) { clearInterval(iv); element.innerHTML = `> <span style="color:#0F0">${text}</span>`; setTimeout(callback, 200); }
-it += 1;
-}, 30);
-}
-function typeLine() {
-if (currentLine >= bootLines.length) { triggerSiteReveal(); return; }
-const lineDiv = document.createElement("div"); lineDiv.className = "boot-line"; bootScreen.appendChild(lineDiv);
-scrambleText(bootLines[currentLine], lineDiv, () => { currentLine++; typeLine(); });
-}
-typeLine();
-function triggerSiteReveal() {
-setTimeout(() => {
-bootScreen.style.opacity = "0";
-setTimeout(() => {
-bootScreen.style.display = "none";
-document.getElementById("main-content").style.opacity = "1";
-setTimeout(() => {
-document.querySelectorAll('.holo-card-wrapper').forEach(w => { forceDecrypt(w); });
-}, 100);
-}, 800);
-}, 800);
-}
-function forceDecrypt(wrapper) {
-const el = wrapper.querySelector('.decrypt-text'); if(!el) return;
-const orig = el.getAttribute('data-original'); if (el.innerHTML === orig) return; 
-let it = 0;
-const iv = setInterval(() => {
-el.innerHTML = orig.split('').map((c, i) => {
-if ("<br>><span class='highlight-bio'>".includes(c) || "<span class='highlight-bio'>".includes(c)) return c; 
-return i < it ? c : "01X#*"[Math.floor(Math.random()*5)];
-}).join('');
-if (it >= orig.length) { 
-clearInterval(iv); el.innerHTML = orig; 
-const statusBar = wrapper.querySelector('.status-bar');
-if(statusBar) statusBar.innerText = "[ SECURE_CONNECTION_ESTABLISHED ]"; 
-}
-it += 2;
-}, 15); 
-}
-const vis = document.getElementById('visualizer');
-for(let i=0; i<80; i++) {
-const bar = document.createElement('div');
-bar.className = 'bar';
-vis.appendChild(bar);
-}
-setInterval(() => {
-const bars = document.querySelectorAll('.bar');
-bars.forEach(b => {
-b.style.height = Math.floor(Math.random() * 40) + 'px';
-b.style.background = isGreen ? 'rgba(0,255,0,0.5)' : 'rgba(162,0,255,0.5)';
-});
-}, 100);
-function generateHash() { return '0x' + Math.random().toString(16).substr(2, 6).toUpperCase() + '...'; }
-setInterval(() => document.querySelectorAll('.live-hash').forEach(el => el.innerText = generateHash()), 80);
-
-// ADDED: TRANSMISSION BUTTON LOGIC
-const submitBtn = document.querySelector('.action-btn');
-if(submitBtn) {
-    submitBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        const btn = this;
-        const inputs = btn.parentElement.querySelectorAll('input, textarea');
-        let valid = true;
-        inputs.forEach(inp => { if(!inp.value.trim()) valid = false; });
-
-        if(!valid) {
-            const origText = btn.innerText;
-            btn.innerText = "[ ERROR: INCOMPLETE DATA ]";
-            btn.style.color = "#f00"; btn.style.borderColor = "#f00";
-            setTimeout(() => { btn.innerText = origText; btn.style.color = "var(--ng)"; btn.style.borderColor = "var(--ng)"; }, 2000);
-            return;
-        }
-
-        btn.innerText = "[ ENCRYPTING PAYLOAD... ]";
-        btn.style.pointerEvents = "none";
-
-        setTimeout(() => {
-            btn.innerText = "[ TRANSMITTING... ]";
-            setTimeout(() => {
-                btn.innerText = "[ TRANSMISSION SECURED ]";
-                btn.style.background = "var(--ng)"; btn.style.color = "#000";
-                inputs.forEach(inp => inp.value = ""); 
-
-                setTimeout(() => {
-                    btn.innerText = "INITIATE TRANSMISSION";
-                    btn.style.background = "transparent"; btn.style.color = "var(--ng)"; btn.style.pointerEvents = "auto";
-                }, 3000);
-            }, 1500);
-        }, 1000);
-    });
-}
-</script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js", {
+            "particles": { "number": { "value": 60, "density": { "enable": true, "value_area": 800 } }, "color": { "value": ["#800080", "#00FF00"] }, "opacity": { "value": 0.5 }, "size": { "value": 3, "random": true }, "line_linked": { "enable": true, "distance": 150, "color": "#0F0", "opacity": 0.4, "width": 3 }, "move": { "enable": true, "speed": 2 } },
+            "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "repulse" } }, "modes": { "grab": { "distance": 140 } } },
+            "retina_detect": true
+        });
+    </script>
+    <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true; s1.src='https://embed.tawk.to/69d7dfd283428a1c31aa5c3a/1jlpk4jd5';
+        s1.charset='UTF-8'; s1.setAttribute('crossorigin','*'); s0.parentNode.insertBefore(s1,s0);
+        })();
+    </script>
 </body>
 </html>
+<script>
+window.currentTheme = "none";
+function updateColors() {
+    if (!window.pJSDom || !window.pJSDom[0]) return;
+    let scrollY = window.scrollY || document.documentElement.scrollTop;
+    let maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    let percent = maxScroll > 0 ? (scrollY / maxScroll) * 100 : 0;
+    
+    // Calculates which 20% chunk we are in. Even chunks = Green, Odd = Purple.
+    let isGreen = Math.floor(percent / 20) % 2 === 0;
+    let target = isGreen ? "#00FF00" : "#800080";
+    
+    if (window.currentTheme !== target) {
+        window.currentTheme = target;
+        let p = window.pJSDom[0].pJS;
+        p.particles.color.value = target;
+        p.particles.line_linked.color = target;
+        p.fn.particlesRefresh(); // Forces the redraw
+    }
+}
+window.addEventListener("scroll", updateColors);
+setTimeout(updateColors, 500); // Forces initial Green state on load
+</script>
