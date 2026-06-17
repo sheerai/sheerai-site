@@ -1,0 +1,109 @@
+                    <li>Network Administration</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="extended-section" id="private-ai">
+            <h2>Air-Gapped Private AI</h2>
+            <p class="section-subtitle">Deploy powerful Large Language Models directly on your own hardware. Zero data leaks. Zero cloud dependencies. Built for Treasure Valley law firms, clinics, and financial offices.</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h2>Local LLM Deployment</h2>
+                    <p>Custom Ollama and Open WebUI stacks tailored to your specific operational needs.</p>
+                </div>
+                <div class="service-card">
+                    <h2>Absolute Data Privacy</h2>
+                    <p>Your proprietary data never leaves your building. Complete mitigation of third-party API risks.</p>
+                </div>
+                <div class="service-card">
+                    <h2>Containerized & Secure</h2>
+                    <p>Docker-based architecture ensuring isolated, highly maintainable, and secure AI nodes.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="extended-section" id="custom-builds">
+            <h2>Specialized Architecture</h2>
+            <p class="section-subtitle">Purpose-built hardware for demanding workloads. We engineer workstations optimized for extreme compute, deep rendering, and uncompromising security.</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h2>The AI Node</h2>
+                    <p>Maximized VRAM and optimized tensor performance configured for running local language models and Docker natively.</p>
+                </div>
+                <div class="service-card">
+                    <h2>Production Workstation</h2>
+                    <p>Engineered for massive multi-threaded workloads, 3D geometric simulations, and complex audio processing.</p>
+                </div>
+                <div class="service-card">
+                    <h2>Zero-Trust Terminal</h2>
+                    <p>Hardware selected for extreme opsec. Built to support security-focused hypervisors and hardware fingerprinting mitigation.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="extended-section" id="onboarding">
+            <h2>Initiate a Project</h2>
+            <p class="section-subtitle">Secure, confidential consultations for enterprise infrastructure and specialized architecture.</p>
+            <form class="intake-form" action="mailto:admin@sheerai.net" method="POST" enctype="text/plain">
+                <input type="text" name="Name" placeholder="Full Name / Point of Contact" required>
+                <input type="text" name="Company" placeholder="Organization / Company">
+                <input type="email" name="Email" placeholder="Secure Email Address" required>
+                <select name="Service_Tier" required>
+                    <option value="" disabled selected>Select Primary Objective...</option>
+                    <option value="Private AI">Air-Gapped Private AI Deployment</option>
+                    <option value="Custom Build">High-Performance Custom Architecture</option>
+                    <option value="Zero Trust">Zero-Trust / Opsec Consulting</option>
+                    <option value="Enterprise IT">Enterprise IT / Network Infrastructure</option>
+                </select>
+                <textarea name="Project_Scope" rows="5" placeholder="Briefly describe your current infrastructure and immediate requirements..." required></textarea>
+                <button type="submit">Request Secure Consultation</button>
+            </form>
+        </div>
+
+        <div class="cta-area">
+            <a href="mailto:admin@sheerai.net" class="btn">Direct Email</a>
+            <a href="https://portal.sheerai.net" class="btn btn-alt">Client Portal Login</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js", {
+            "particles": { "number": { "value": 60, "density": { "enable": true, "value_area": 800 } }, "color": { "value": ["#800080", "#00FF00"] }, "opacity": { "value": 0.5 }, "size": { "value": 3, "random": true }, "line_linked": { "enable": true, "distance": 150, "color": "#0F0", "opacity": 0.4, "width": 3 }, "move": { "enable": true, "speed": 2 } },
+            "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "repulse" } }, "modes": { "grab": { "distance": 140 } } },
+            "retina_detect": true
+        });
+    </script>
+    <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true; s1.src='https://embed.tawk.to/69d7dfd283428a1c31aa5c3a/1jlpk4jd5';
+        s1.charset='UTF-8'; s1.setAttribute('crossorigin','*'); s0.parentNode.insertBefore(s1,s0);
+        })();
+    </script>
+</body>
+</html>
+<script>
+window.currentTheme = "none";
+function updateColors() {
+    if (!window.pJSDom || !window.pJSDom[0]) return;
+    let scrollY = window.scrollY || document.documentElement.scrollTop;
+    let maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    let percent = maxScroll > 0 ? (scrollY / maxScroll) * 100 : 0;
+    
+    // Calculates which 20% chunk we are in. Even chunks = Green, Odd = Purple.
+    let isGreen = Math.floor(percent / 20) % 2 === 0;
+    let target = isGreen ? "#00FF00" : "#800080";
+    
+    if (window.currentTheme !== target) {
+        window.currentTheme = target;
+        let p = window.pJSDom[0].pJS;
+        p.particles.color.value = target;
+        p.particles.line_linked.color = target;
+        p.fn.particlesRefresh(); // Forces the redraw
+    }
+}
+window.addEventListener("scroll", updateColors);
+setTimeout(updateColors, 500); // Forces initial Green state on load
+</script>
