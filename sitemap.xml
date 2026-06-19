@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://sheerai.net/</loc>
-    <lastmod>2026-06-17</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://sheerai.net/intel.html</loc>
-    <lastmod>2026-06-17</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
+  <url><loc>https://sheerai.net/</loc><priority>1.0</priority></url>
+  <url><loc>https://sheerai.net/intel.html</loc><priority>0.8</priority></url>
+  <url><loc>https://sheerai.net/services/law-firm-private-ai.html</loc><priority>0.8</priority></url>
+  <url><loc>https://sheerai.net/services/grapheneos-secure-flashing.html</loc><priority>0.8</priority></url>
+  <url><loc>https://sheerai.net/services/qubes-os-hardware-consulting.html</loc><priority>0.8</priority></url>
+  <url><loc>https://sheerai.net/services/custom-ai-tensor-workstations.html</loc><priority>0.8</priority></url>
 </urlset>
