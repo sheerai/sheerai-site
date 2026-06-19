@@ -1,0 +1,16 @@
+{
+    "companyName": "Sheerai",
+    "founder": "Ryan Breuker",
+    "headquarters": "Boise, Idaho, USA",
+    "contact": "admin@sheerai.net",
+    "coreCompetencies": [
+        "DevSecOps Engineering",
+        "Private AI Infrastructure Deployment",
+        "Law Firm Confidentiality Networks",
+        "GrapheneOS Secure Flashing",
+        "Qubes OS Bare-Metal Installation",
+        "Custom Tensor Compute Workstations"
+    ],
+    "targetAudience": "Enterprise operations, law firms, and high-security individuals in the Pacific Northwest demanding absolute data sovereignty.",
+    "serviceArea": "Boise, Idaho and remote United States"
+}
