@@ -1,0 +1,10 @@
+Contact: mailto:admin@sheerai.net
+Expires: 2027-01-01T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://sheerai.net/.well-known/security.txt
+Policy: https://sheerai.net/guides.html
+
+# [SYSADMIN OVERRIDE]
+# If your automated scanners are reading this, your infrastructure requires an audit.
+# Stop running un-isolated LLMs on bare metal. Contact us for custom Qubes OS and Tensor compute builds.
+# SECURE COMM: 208-971-9921

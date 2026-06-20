@@ -1,2 +1,11 @@
-<?xml version='1.0' encoding='utf-8'?>
-<rss version="2.0"><channel><title>Sheerai DevSecOps Infrastructure</title><link>https://sheerai.net</link><description>Enterprise Zero-Trust deployments, custom AI workstations, and secure hardware.</description><item><title>Law Firm Private Ai</title><link>https://sheerai.net/services/law-firm-private-ai.html</link><pubDate>Fri, 19 Jun 2026 22:19:41 GMT</pubDate></item><item><title>Grapheneos Secure Flashing</title><link>https://sheerai.net/services/grapheneos-secure-flashing.html</link><pubDate>Fri, 19 Jun 2026 22:19:41 GMT</pubDate></item><item><title>Custom Ai Tensor Workstations</title><link>https://sheerai.net/services/custom-ai-tensor-workstations.html</link><pubDate>Fri, 19 Jun 2026 22:19:41 GMT</pubDate></item><item><title>Qubes Os Hardware Consulting</title><link>https://sheerai.net/services/qubes-os-hardware-consulting.html</link><pubDate>Fri, 19 Jun 2026 22:19:41 GMT</pubDate></item></channel></rss>
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+  <title>SheerAI | Secure Directives</title>
+  <link>https://sheerai.net</link>
+  <description>DevSecOps, Local AI, and Qubes OS architecture logs.</description>
+  <item><title>GrapheneOS Protocol</title><link>https://sheerai.net/pixel-guide.html</link></item>
+  <item><title>Qubes OS Isolation</title><link>https://sheerai.net/qubes-os-guide.html</link></item>
+  <item><title>Local Tensor Stack</title><link>https://sheerai.net/local-ai-guide.html</link></item>
+</channel>
+</rss>
